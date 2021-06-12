@@ -1,0 +1,14 @@
+[package]
+name = "image_to_ascii"
+version = "0.1.0"
+authors = ["Brighton Sikarskie <brighton.sikarskie@tuta.io>"]
+readme = "README.md"
+description = "A simple rust image to ascii converter"
+repository = "https://github.com/bsikar/image_to_ascii"
+license = "MIT"
+edition = "2018"
+
+[dependencies]
+clap = "2.33.3"
+fontdue = "0.5.2"
+image = "0.23.14"
