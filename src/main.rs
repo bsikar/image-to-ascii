@@ -134,7 +134,7 @@ fn main() {
     } else {
         let mut file = std::fs::OpenOptions::new()
             .write(true)
-            .create_new(true)
+            .create(true)
             .open(matches.value_of("output").unwrap())
             .expect("failed to create file");
         file.write_all(format!("{}", AsciiImage(img)).as_bytes())
