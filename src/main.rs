@@ -136,7 +136,7 @@ fn main() {
             .write(true)
             .create_new(true)
             .open(matches.value_of("output").unwrap())
-            .expect("failed to write to file");
+            .expect("failed to create file");
         file.write_all(format!("{}", AsciiImage(img)).as_bytes())
             .expect("failed to write to file");
     }
