@@ -10,5 +10,4 @@ edition = "2018"
 
 [dependencies]
 clap = "2.33.3"
-fontdue = "0.5.2"
 image = "0.23.14"
