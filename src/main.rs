@@ -5,6 +5,7 @@ use clap::Arg;
 use image::imageops::{resize, FilterType};
 use image::{GenericImageView, GrayImage, ImageBuffer, Pixel};
 use std::fmt::{self, Display, Formatter};
+use std::io::prelude::Write;
 use FilterType::Lanczos3;
 
 const ASCII_TABLE: [char; 70] = [
@@ -71,8 +72,8 @@ impl Display for AsciiImage {
             .map(|row| {
                 row.map(|luma| {
                     // luma.0 == luma.channels() *NOTE* it is used here because formating
-                    ASCII_TABLE[(luma.0[0] as f64 / u8::MAX as f64 * (ASCII_TABLE.len() - 1) as f64).trunc()
-                        as usize]
+                    ASCII_TABLE[(luma.0[0] as f64 / u8::MAX as f64 * (ASCII_TABLE.len() - 1) as f64)
+                        .trunc() as usize]
                         .to_string()
                         .repeat(2)
                 })
@@ -96,7 +97,6 @@ fn main() {
         .arg(
             Arg::with_name("output")
                 .help("This is the output name")
-                .required(true)
                 .index(2),
         )
         .arg(
@@ -117,10 +117,10 @@ fn main() {
 
     let width = matches
         .value_of("width")
-        .map(|x| x.parse::<u32>().expect("Failed to parse to u32."));
+        .map(|x| x.parse::<u32>().expect("failed to parse to u32"));
     let height = matches
         .value_of("height")
-        .map(|x| x.parse::<u32>().expect("Failed to parse to u32."));
+        .map(|x| x.parse::<u32>().expect("failed to parse to u32"));
 
     let scaler = Scaler(width, height);
 
@@ -129,5 +129,15 @@ fn main() {
         .into_luma8();
     let img = scaler.scale(&img, Lanczos3);
 
-    println!("{}", AsciiImage(img));
+    if let None = matches.value_of("output") {
+        println!("{}", AsciiImage(img));
+    } else {
+        let mut file = std::fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(matches.value_of("output").unwrap())
+            .expect("failed to write to file");
+        file.write_all(format!("{}", AsciiImage(img)).as_bytes())
+            .expect("failed to write to file");
+    }
 }
