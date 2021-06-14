@@ -104,14 +104,14 @@ fn main() {
                 .help("This is your output image width in charaters")
                 .short("w")
                 .long("width")
-                .value_name("width"),
+                .value_name("WIDTH"),
         )
         .arg(
             Arg::with_name("height")
                 .help("This is your output image height in charaters")
                 .short("h")
                 .long("height")
-                .value_name("height"),
+                .value_name("HEIGHT"),
         )
         .get_matches();
 
