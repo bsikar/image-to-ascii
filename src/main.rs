@@ -92,12 +92,14 @@ fn main() {
             Arg::with_name("input")
                 .help("This is the image you are converting to ascii")
                 .required(true)
-                .index(1),
+                .index(1)
+                .value_name("INPUT"),
         )
         .arg(
             Arg::with_name("output")
                 .help("This is the output name")
-                .index(2),
+                .index(2)
+                .value_name("OUTPUT"),
         )
         .arg(
             Arg::with_name("width")
